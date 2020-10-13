@@ -1,35 +1,44 @@
-// @ts-nocheck
-
-
-/* ----- setup ------ */
-
-// sets up a bodystream with configuration object
-var globalDistance = 0;
-
-let monoSynth;
+let osc, playing, freq, amp;
 
 function setup() {
+  osc = new p5.Oscillator('sine');
+}
 
-  monoSynth = new p5.MonoSynth();
+function draw() {
+  freq = globalDistance;
+  amp = 10;
+
+  if (playing) {
+    // smooth the transitions by 0.1 seconds
+    osc.freq(freq, 0.1);
+    osc.amp(amp, 0.1);
+  }
+}
+
+function playOscillator() {
+  // starting an oscillator on a user gesture will enable audio
+  // in browsers that have a strict autoplay policy.
+  // See also: userStartAudio();
+  if (globalDistance > 400) {
+      playing = false;
+      osc.stop();
+  }
+  if (globalDistance < 100){
+    if(!playing){
+        osc.start();
+        playing = true;
+    }
+  }
+}
+
+function mouseReleased() {
+  // ramp amplitude to 0 over 0.5 seconds
+  osc.amp(0, 0.5);
+  playing = false;
 }
 
 
-let noteArray = ['A5', 'G4','G3', 'G2',]
-
-function playSynth(q) {
-    userStartAudio();
-    
-    note = noteArray[q]
-    // note velocity (volume, from 0 to 1)
-    let velocity = random();
-    // time from now (in seconds)
-    let time;
-    // note duration (in seconds)
-    let dur = 1/6;
-  
-    monoSynth.play(note, velocity, time, dur);
-   console.log(globalDistance)
-  }
+var globalDistance = 0;
 
 
 
@@ -49,15 +58,11 @@ bodies.addEventListener('bodiesDetected', (e) => {
     globalDistance = distance;
     document.getElementById('output').innerText = `Distance between wrists: ${distance}`
     body.getDistanceBetweenBodyParts(bodyParts.leftWrist, bodyParts.rightWrist)
-
-    if(distance < 200 && distance > 100){
- playSynth(0);
-    }
-    if(distance < 100){
-        playSynth(1);
-           }
-       
-
+    
+    
+    if (distance < 100) playOscillator();
+    
+    
 })
 
 
