@@ -5,8 +5,30 @@
 
 // sets up a bodystream with configuration object
 
+let monoSynth;
+
+function setup() {
+
+  monoSynth = new p5.MonoSynth();
+}
 
 
+let noteArray = ['A5', 'G4','G3', 'G2',]
+
+function playSynth(q) {
+    userStartAudio();
+    
+    note = noteArray[q]
+    // note velocity (volume, from 0 to 1)
+    let velocity = random();
+    // time from now (in seconds)
+    let time;
+    // note duration (in seconds)
+    let dur = 1/6;
+  
+    monoSynth.play(note, velocity, time, dur);
+   
+  }
 
 
 
@@ -16,6 +38,7 @@ const bodies = new BodyStream ({
       detectionType: detectionType.singleBody, 
       videoElement: document.getElementById('video'), 
       samplingRate: 250})
+    
 let body
 
 bodies.addEventListener('bodiesDetected', (e) => {
@@ -23,7 +46,16 @@ bodies.addEventListener('bodiesDetected', (e) => {
     body = e.detail.bodies.getBodyAt(0)
     const distance = Math.round(body.getDistanceBetweenBodyParts(bodyParts.leftWrist, bodyParts.rightWrist))
     document.getElementById('output').innerText = `Distance between wrists: ${distance}`
-    body.getDistanceBetweenBodyParts(bodyParts.leftWrist, bodyParts.rightWrist)      
+    body.getDistanceBetweenBodyParts(bodyParts.leftWrist, bodyParts.rightWrist)
+
+    if(distance < 200 && distance > 100){
+ playSynth(0);
+    }
+    if(distance < 100){
+        playSynth(1);
+           }
+       
+
 })
 
 // get elements
