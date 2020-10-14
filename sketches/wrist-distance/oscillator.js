@@ -7,13 +7,15 @@ function setup() {
 function draw() {
   freq = globalDistance;
   amp = 10;
-
+ console.log(globalDistance);
   if (playing) {
     // smooth the transitions by 0.1 seconds
     osc.freq(freq, 0.1);
     osc.amp(amp, 0.1);
   }
 }
+
+
 
 function playOscillator() {
   // starting an oscillator on a user gesture will enable audio
@@ -40,7 +42,11 @@ function mouseReleased() {
 
 var globalDistance = 0;
 
+function logMe(){
+  console.log(globalDistance);
+}
 
+logMe();
 
 const bodies = new BodyStream ({
       posenet: posenet,
@@ -87,13 +93,13 @@ function drawCameraIntoCanvas() {
 
         // draw left wrist
         ctx.beginPath();
-        ctx.arc(leftWrist.position.x, leftWrist.position.y, 10, 0, 2 * Math.PI);
+        ctx.arc(leftWrist.position.x, leftWrist.position.y, 5, 0, 2 * Math.PI);
         ctx.fillStyle = 'white'
         ctx.fill()
 
         // draw right wrist
         ctx.beginPath();
-        ctx.arc(rightWrist.position.x, rightWrist.position.y, 10, 0, 2 * Math.PI);
+        ctx.arc(rightWrist.position.x, rightWrist.position.y, 5, 0, 2 * Math.PI);
         ctx.fillStyle = 'white'
         ctx.fill()
     }
