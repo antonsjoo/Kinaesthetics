@@ -1,7 +1,7 @@
 
   // starting an oscillator on a user gesture will enable audio
   // in browsers that have a strict autoplay policy.
-  // See also: userStartAudio();
+  // See also: userStartAudio(); ssdsd
 
 var posX = 0;
 var posY = 0;
