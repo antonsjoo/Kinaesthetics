@@ -23,7 +23,7 @@ bodies.addEventListener('bodiesDetected', (e) => {
 
 
       console.log("works");
-              }
+  }
 })
 
 // get elements
