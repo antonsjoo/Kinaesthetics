@@ -58,6 +58,7 @@ bodies.addEventListener('bodiesDetected', (e) => {
   body2 = e.detail.bodies.getBodyAt(1)
   const leftEye = body.getBodyPart(bodyParts.leftEye)
   const rightEye = body.getBodyPart(bodyParts.rightEye)
+  const rightEye2 = body2.getBodyPart(bodyParts.rightEye)
   
     const distance = Math.round(body.getDistanceBetweenBodyParts(bodyParts.leftEye, bodyParts.rightEye))
     globalDistance = distance;
@@ -66,6 +67,7 @@ bodies.addEventListener('bodiesDetected', (e) => {
 
     posX = Math.round(rightEye.position.x)
     posY = Math.round(rightEye.position.y)
+<<<<<<< HEAD
 
     bodyVolume = posX/560;
     if(bodyVolume > 1){
@@ -75,6 +77,9 @@ bodies.addEventListener('bodiesDetected', (e) => {
       bodyVolume = 0;
     }
 playSound();
+=======
+    
+>>>>>>> fda0771792b9c909c4ace5062873421c25d2f616
 })
 
 
@@ -95,14 +100,17 @@ function drawCameraIntoCanvas() {
     // draw the video element into the canvas
     ctx.drawImage(video, 0, 0, video.width, video.height);
     
-    if (body) {
+    if (body && body2) {
         // draw circle for left and right wrist
-        const leftEye = body.getBodyPart(bodyParts.leftEye)
+        const rightEye2 = body2.getBodyPart(bodyParts.rightEye)
         const rightEye = body.getBodyPart(bodyParts.rightEye)
         
 
-        // draw left wrist
-       
+        // draw right eye 2
+        ctx.beginPath();
+        ctx.arc(rightEye2.position.x, rightEye2.position.y, 5, 0, 2 * Math.PI);
+        ctx.fillStyle = 'white'
+        ctx.fill()
 
         // draw right wrist
         ctx.beginPath();
