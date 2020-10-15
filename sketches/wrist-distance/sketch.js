@@ -14,7 +14,7 @@ ctx.scale(-1,1)
 }
 function draw(){
 
-  console.log(posX,posY)
+  console.log(posX)
   if (mouseIsPressed) {
     fill(0);
   } else {
@@ -37,14 +37,19 @@ bodies.addEventListener('bodiesDetected', (e) => {
   body = e.detail.bodies.getBodyAt(0)
   const leftEye = body.getBodyPart(bodyParts.leftEye)
   const rightEye = body.getBodyPart(bodyParts.rightEye)
+  
     const distance = Math.round(body.getDistanceBetweenBodyParts(bodyParts.leftEye, bodyParts.rightEye))
     globalDistance = distance;
     document.getElementById('output').innerText = `Position: ${posX}`
     body.getDistanceBetweenBodyParts(bodyParts.leftEye, bodyParts.rightEye)
 
     posX = Math.round(rightEye.position.x)
-    posY = Math.round(rightEye.position.y)
+    posY = Math.round(rightEye.this.position.y)
+    
 })
+
+
+
 
 
 
