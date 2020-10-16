@@ -67,7 +67,6 @@ bodies.addEventListener('bodiesDetected', (e) => {
 
     posX = Math.round(rightEye.position.x)
     posY = Math.round(rightEye.position.y)
-<<<<<<< HEAD
 
     bodyVolume = posX/560;
     if(bodyVolume > 1){
@@ -77,9 +76,6 @@ bodies.addEventListener('bodiesDetected', (e) => {
       bodyVolume = 0;
     }
 playSound();
-=======
-    
->>>>>>> fda0771792b9c909c4ace5062873421c25d2f616
 })
 
 
