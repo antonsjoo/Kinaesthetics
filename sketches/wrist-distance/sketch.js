@@ -72,6 +72,7 @@ bodies.addEventListener('bodiesDetected', (e) => {
     console.log(distance);
     posX = Math.round(rightEye.position.x)
     posY = Math.round(rightEye.position.y)
+<<<<<<< HEAD
     posX2 = Math.round(rightEye2.position.x)
     posY2 = Math.round(rightEye2.position.y)
     //bodyDistance = distance/500;
@@ -81,6 +82,17 @@ bodies.addEventListener('bodiesDetected', (e) => {
     else if(bodyDistance < 0){
       bodyDistance = 0;
     }*/
+=======
+
+    bodyVolume = posX/560;
+    if(bodyVolume > 1){
+      bodyVolume = 1;
+    }
+    else if(bodyVolume < 0){
+      bodyVolume = 0;
+    }
+playSound();
+>>>>>>> d4a6c022b34212459670997b1b63ea5e325585b0
 })
 
 
