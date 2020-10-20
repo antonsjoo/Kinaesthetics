@@ -3,7 +3,7 @@ const osc = new Tone.Oscillator().toDestination();
 var flag = 0;
 var globalSpeed;
 var globalDistance = 0;
-var freezeState;
+var freezeState = 0;
 
 
 class Rubberband  {
@@ -16,19 +16,26 @@ class Rubberband  {
     stretch(){
     osc.frequency.value = globalDistance;
     //Initiating a note if you put your wrists together and there's no band
+    const leftWrist = body.getBodyPart(bodyParts.leftWrist);
+    const leftWristY = Math.round(leftWrist.position.y);
+
         if(globalDistance < 110 && flag <= 0){
             osc.start();
-            playing = true;
         }
-        if(globalDistance >= this.freezeState){
+        if (leftWristY <= 190){
             flag = 1;
+            freezeState = globalDistance;
         }
         if(flag == 1){
-            osc.frequency.value = this.freezeState
+            osc.frequency.value = freezeState
+        }
+        if(flag == 1 && globalDistance < 110){
+            flag = 0;
+            osc.start()
         }
     }
 }
-const rubberband = new Rubberband(360,100,globalSpeed)
+const rubberband = new Rubberband(freezeState,100,globalSpeed)
 const bodies = new BodyStream ({
       posenet: posenet,
       architecture: modelArchitecture.MobileNetV1, 
