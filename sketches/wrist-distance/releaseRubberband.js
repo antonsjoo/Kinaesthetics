@@ -3,24 +3,33 @@ const osc = new Tone.Oscillator().toDestination();
 var flag = 0;
 var globalSpeed;
 var globalDistance = 0;
+var freezeState;
+
 
 class Rubberband  {
-constructor(freezeState, minDistance,globalSpeed){
-  this.freezeState = freezeState
-  this.minDistance = minDistance
-  this.globalSpeed = globalSpeed
-}
+    constructor(freezeState, minDistance,globalSpeed){
+    this.freezeState = freezeState
+    this.minDistance = minDistance
+    this.globalSpeed = globalSpeed
+    }
 
-stretch(){
-  osc.frequency.value = globalDistance;
-  osc.start();
- if(globalDistance >= this.freezeState){
-    flag = 1;
- }
- if(flag == 1){
-    osc.frequency.value = this.freezeState
- }
-}
+    stretch(){
+    osc.frequency.value = globalDistance;
+    //Initiating a note if you put your wrists together and there's no band
+        if(globalDistance < 110 && flag <= 0){
+            osc.start();
+        }
+        if(globalDistance >= this.freezeState){
+            flag = 1;
+        }
+        if(flag == 1){
+            osc.frequency.value = this.freezeState
+        }
+        if(flag == 1 && globalDistance < 110){
+            flag = 0;
+            osc.start()
+        }
+    }
 }
 const rubberband = new Rubberband(360,100,globalSpeed)
 const bodies = new BodyStream ({
@@ -50,8 +59,15 @@ bodies.addEventListener('bodiesDetected', (e) => {
     body.getDistanceBetweenBodyParts(bodyParts.leftWrist, bodyParts.rightWrist)
     speed = rightWrist.speed.absoluteSpeed;
     globalSpeed = speed;
+    //rightWristY = rightWrist.position.y;
+    
+    //trying to figure out a way to see if the current Y position of the wrist went up compared to the previous Y position of the wrist in the last 10 ms?
+    
+    /*wristY = Math.round(rightWrist.position.y);
+    wristUp = wristY - 100;*/
+
+    
     rubberband.stretch();
-   console.log(globalSpeed);
     
 })
 

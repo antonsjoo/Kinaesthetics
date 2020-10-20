@@ -5,25 +5,30 @@ var globalSpeed;
 var globalDistance = 0;
 var freezeState;
 
-class Rubberband  {
-constructor(freezeState, minDistance,globalSpeed){
-  this.freezeState = freezeState
-  this.minDistance = minDistance
-  this.globalSpeed = globalSpeed
-}
 
-stretch(){
-  osc.frequency.value = globalDistance;
-  osc.start();
- if(globalDistance >= this.freezeState){
-flag = 1;
- }
- if(flag == 1){
-osc.frequency.value = this.freezeState
- }
+class Rubberband  {
+    constructor(freezeState, minDistance,globalSpeed){
+    this.freezeState = freezeState
+    this.minDistance = minDistance
+    this.globalSpeed = globalSpeed
+    }
+
+    stretch(){
+    osc.frequency.value = globalDistance;
+    //Initiating a note if you put your wrists together and there's no band
+        if(globalDistance < 110 && flag <= 0){
+            osc.start();
+            playing = true;
+        }
+        if(globalDistance >= this.freezeState){
+            flag = 1;
+        }
+        if(flag == 1){
+            osc.frequency.value = this.freezeState
+        }
+    }
 }
-}
-const rubberband = new Rubberband(freezeState,100,globalSpeed)
+const rubberband = new Rubberband(360,100,globalSpeed)
 const bodies = new BodyStream ({
       posenet: posenet,
       architecture: modelArchitecture.MobileNetV1, 
@@ -54,8 +59,9 @@ bodies.addEventListener('bodiesDetected', (e) => {
     //rightWristY = rightWrist.position.y;
     
     //trying to figure out a way to see if the current Y position of the wrist went up compared to the previous Y position of the wrist in the last 10 ms?
-    wristY = Math.round(rightWrist.position.y);
-    wristUp = wristY - 100;
+    
+    /*wristY = Math.round(rightWrist.position.y);
+    wristUp = wristY - 100;*/
 
     
     rubberband.stretch();
