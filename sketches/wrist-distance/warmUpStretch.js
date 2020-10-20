@@ -98,7 +98,7 @@ function drawCameraIntoCanvas() {
     if (body) {
         ctx.clearRect(0, 0, video.width, video.height)
 
-        ctx.drawImage(video, 0, 0, video.width, video.height);
+        //ctx.drawImage(video, 0, 0, video.width, video.height);
         // draw circle for left and right wrist
         const leftWrist = body.getBodyPart(bodyParts.leftWrist)
         const rightWrist = body.getBodyPart(bodyParts.rightWrist)
