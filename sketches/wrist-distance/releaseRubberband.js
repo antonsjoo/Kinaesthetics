@@ -5,17 +5,16 @@ var globalSpeed;
 var globalDistance = 0;
 var freezeState;
 
-
-class Rubberband  {
+class Rubberband {
     constructor(freezeState, minDistance,globalSpeed){
-    this.freezeState = freezeState
-    this.minDistance = minDistance
-    this.globalSpeed = globalSpeed
+        this.freezeState = freezeState;
+        this.minDistance = minDistance;
+        this.globalSpeed = globalSpeed;
     }
 
-    stretch(){
-    osc.frequency.value = globalDistance;
-    //Initiating a note if you put your wrists together and there's no band
+    stretch() {
+        osc.frequency.value = globalDistance;
+        //Initiating a note if you put your wrists together and there's no band
         if(globalDistance < 110 && flag <= 0){
             osc.start();
         }
@@ -23,23 +22,44 @@ class Rubberband  {
             flag = 1;
         }
         if(flag == 1){
-            osc.frequency.value = this.freezeState
+            osc.frequency.value = this.freezeState;
         }
         if(flag == 1 && globalDistance < 110){
             flag = 0;
-            osc.start()
+            osc.start();
+        }
+        
+        if(speed > breakingPoint) {
+            console.log('Oh crap! It snapped!!');
         }
     }
+
+    spawn(){
+       /* if(globalDistance >= this.freezeState){
+         osc.start();
+         osc.frequency.value = 0;
+        }
+        if(globalDistance < 110 && flag <= 0){
+            osc.start();
+            osc.frequency.value = globalDistance;
+        }
+        */
+
+        osc.start()
+        osc.frequency.value = globalDistance;
+    }
 }
-const rubberband = new Rubberband(360,100,globalSpeed)
+
+const rubberband = new Rubberband(360,100,globalSpeed);
 const bodies = new BodyStream ({
-      posenet: posenet,
-      architecture: modelArchitecture.MobileNetV1, 
-      detectionType: detectionType.singleBody, 
-      videoElement: document.getElementById('video'), 
-      samplingRate: 250})
+    posenet: posenet,
+    architecture: modelArchitecture.ResNet50, 
+    detectionType: detectionType.singleBody,
+    outputStride: 16, 
+    videoElement: document.getElementById('video'), 
+    samplingRate: 67.5});
     
-let body
+let body;
 
 /*if(globalDistance < 500){
 newRubberband();
@@ -69,6 +89,7 @@ bodies.addEventListener('bodiesDetected', (e) => {
     
     rubberband.stretch();
     
+    
 })
 
 
@@ -93,15 +114,23 @@ function drawCameraIntoCanvas() {
 
         // draw left Eye
         ctx.beginPath();
-        ctx.arc(leftWrist.position.x, leftWrist.position.y, 10, 0, 2 * Math.PI);
+        ctx.arc(leftWrist.position.x, leftWrist.position.y, 5, 0, 2 * Math.PI);
         ctx.fillStyle = 'white'
         ctx.fill()
 
         // draw right Eye
         ctx.beginPath();
-        ctx.arc(rightWrist.position.x, rightWrist.position.y, 10, 0, 2 * Math.PI);
+        ctx.arc(rightWrist.position.x, rightWrist.position.y, 5, 0, 2 * Math.PI);
         ctx.fillStyle = 'white'
         ctx.fill()
+
+
+        ctx.beginPath();
+        ctx.moveTo(leftWrist.position.x,leftWrist.position.y);
+        ctx.lineTo(rightWrist.position.x,rightWrist.position.y, 150);
+        ctx.lineWidth = 10;
+        ctx.strokeStyle = 'white'
+        ctx.stroke();
     }
     requestAnimationFrame(drawCameraIntoCanvas)
 }
