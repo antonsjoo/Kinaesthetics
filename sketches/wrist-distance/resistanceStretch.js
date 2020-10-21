@@ -72,7 +72,7 @@ bodies.addEventListener('bodiesDetected', (e) => {
     document.getElementById('speed').innerText = `Speed of left wrist: ${speed}`
     
     //Make the note snap if you go too fast when stretching it
-    if (distance <= 300 && speed >= 500){
+    if (speed > distance){
         playing = false;
         osc.stop();
     } else {
