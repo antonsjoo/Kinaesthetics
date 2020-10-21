@@ -4,6 +4,7 @@ var flag = 0;
 var globalSpeed;
 var globalDistance = 0;
 var freezeState = 0;
+let decreaseStretch;
 
 
 class Rubberband  {
@@ -27,7 +28,7 @@ class Rubberband  {
             freezeState = globalDistance;
         }
         if(flag == 1){
-            osc.frequency.value = freezeState
+            osc.frequency.value = freezeState;
         }
         if(flag == 1 && globalDistance < 110){
             flag = 0;

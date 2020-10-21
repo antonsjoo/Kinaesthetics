@@ -39,6 +39,7 @@ var breakingDistance = maxDistance + 30;
 var distRange = maxDistance - minDistance;
 var distStep = distRange / noteArray.length;
 var broken = false;
+let decreaseStretch;
 
 class Rubberband {
     constructor(freezeState, minDistance,globalSpeed) {
@@ -82,7 +83,7 @@ class Rubberband {
                         if(flag == 1){
                             synth.triggerAttackRelease(freezeState);
                         }
-                       if(flag == 1 && globalDistance < (minDistance + (distStep * i))){
+                        if(flag == 1 && globalDistance < (minDistance + (distStep * i))){
                         flag = 0;
                         broken = true
                         }
@@ -122,12 +123,6 @@ bodies.addEventListener('bodiesDetected', (e) => {
     body.getDistanceBetweenBodyParts(bodyParts.leftWrist, bodyParts.rightWrist);
     speed = rightWrist.speed.absoluteSpeed;
     globalSpeed = speed;
-    //rightWristY = rightWrist.position.y;
-    
-    //trying to figure out a way to see if the current Y position of the wrist went up compared to the previous Y position of the wrist in the last 10 ms?
-    
-    /*wristY = Math.round(rightWrist.position.y);
-    wristUp = wristY - 100;*/
 
     
     rubberband.stretch();  
