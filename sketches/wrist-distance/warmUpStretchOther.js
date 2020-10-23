@@ -61,8 +61,9 @@ class Rubberband {
 
       //filter.frequency.value = 0;
 
-        const leftWrist = body.getBodyPart(bodyParts.leftWrist);
-        const leftWristY = Math.round(leftWrist.position.y);
+      //To make the leftWrist responsible for fixating a stretched note
+        /*const leftWrist = body.getBodyPart(bodyParts.leftWrist);
+        const leftWristY = Math.round(leftWrist.position.y);*/
 
         // reset
         if (globalDistance < minDistance - 10) {
@@ -89,7 +90,7 @@ class Rubberband {
                     if(globalDistance < (minDistance + (distStep * i))) {
                         synth.triggerAttackRelease(noteArray[i], '28n');
 
-                        if (leftWristY <= 190){
+                        /*if (leftWristY <= 190){
                             flag = 1;
                             freezeState = noteArray[i];
                         }
@@ -99,7 +100,7 @@ class Rubberband {
                         if(flag == 1 && globalDistance < (minDistance + (distStep * i))){
                         flag = 0;
                         broken = true
-                        }
+                        }*/
 
                         if(counter <= 1 && globalDistance >= 150){
                           autoFilter.start();
@@ -129,10 +130,10 @@ class Rubberband {
                         }
 
                         if(counter <= 3 && globalDistance >= 200){
-                          autoFilter.start();
-                          indicatorSynth.start();
-                          //autoFilter.frequency.value = 600;
-                          synth.triggerAttackRelease(noteArray[i], '28n')
+                            autoFilter.start();
+                            indicatorSynth.start();
+                            //autoFilter.frequency.value = 600;
+                            synth.triggerAttackRelease(noteArray[i], '28n')
                           console.log("S2");
                           counter = 3;
                           console.log(counter);
@@ -146,19 +147,19 @@ class Rubberband {
                           }
                           counter = 0;
                           console.log(counter);
-                          autoFilter.stop();
-                          indicatorSynth.stop();
                         }
                         if(counter == 3 && globalDistance < 190){
                           counter = 4;
                           console.log(counter);
+                          autoFilter.stop();
+                          indicatorSynth.stop();
                         }
 
                         if(counter <= 5 && globalDistance >= 250){
-                          autoFilter.start();
-                          indicatorSynth.start();
-                          //autoFilter.frequency.value = 600;
-                          synth.triggerAttackRelease(noteArray[i], '28n')
+                            autoFilter.start();
+                            indicatorSynth.start();
+                            //autoFilter.frequency.value = 600;
+                            synth.triggerAttackRelease(noteArray[i], '28n')
                           console.log("S3");
                           counter = 5;
                           console.log(counter);
@@ -210,12 +211,12 @@ function newRubberband() {
 
 bodies.addEventListener('bodiesDetected', (e) => {
     body = e.detail.bodies.getBodyAt(0);
-    const rightWrist = body.getBodyPart(bodyParts.rightWrist);
-    const distance = Math.round(body.getDistanceBetweenBodyParts(bodyParts.leftWrist, bodyParts.rightWrist));
+    const rightAnkle = body.getBodyPart(bodyParts.rightAnkle);
+    const distance = Math.round(body.getDistanceBetweenBodyParts(bodyParts.rightWrist, bodyParts.rightAnkle));
     globalDistance = distance;
     document.getElementById('output').innerText = `Distance between Eyes: ${distance}`;
-    body.getDistanceBetweenBodyParts(bodyParts.leftWrist, bodyParts.rightWrist);
-    speed = rightWrist.speed.absoluteSpeed;
+    body.getDistanceBetweenBodyParts(bodyParts.rightWrist, bodyParts.rightAnkle);
+    speed = rightAnkle.speed.absoluteSpeed;
     globalSpeed = speed;
 
     
@@ -237,27 +238,27 @@ function drawCameraIntoCanvas() {
     
     if (body) {
         // draw circle for left and right Eye
-        const leftWrist = body.getBodyPart(bodyParts.leftWrist);
         const rightWrist = body.getBodyPart(bodyParts.rightWrist);
+        const rightAnkle = body.getBodyPart(bodyParts.rightAnkle);
 
 
 
         // draw left Eye
         ctx.beginPath();
-        ctx.arc(leftWrist.position.x, leftWrist.position.y, 5, 0, 2 * Math.PI);
+        ctx.arc(rightWrist.position.x, rightWrist.position.y, 5, 0, 2 * Math.PI);
         ctx.fillStyle = 'white';
         ctx.fill();
 
         // draw right Eye
         ctx.beginPath();
-        ctx.arc(rightWrist.position.x, rightWrist.position.y, 5, 0, 2 * Math.PI);
+        ctx.arc(rightAnkle.position.x, rightAnkle.position.y, 5, 0, 2 * Math.PI);
         ctx.fillStyle = 'white';
         ctx.fill();
 
 
         ctx.beginPath();
-        ctx.moveTo(leftWrist.position.x,leftWrist.position.y);
-        ctx.lineTo(rightWrist.position.x,rightWrist.position.y, 150);
+        ctx.moveTo(rightWrist.position.x,rightWrist.position.y);
+        ctx.lineTo(rightAnkle.position.x,rightAnkle.position.y, 150);
         ctx.lineWidth = 10;
         ctx.strokeStyle = 'white';
         ctx.stroke();
