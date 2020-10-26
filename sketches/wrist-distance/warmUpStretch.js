@@ -58,6 +58,8 @@ class Rubberband {
     }
 
     stretch() {
+      autoFilter.stop();
+      indicatorSynth.stop();
 
       //filter.frequency.value = 0;
 
@@ -119,6 +121,7 @@ class Rubberband {
                           }
                           counter = 0;
                           console.log(counter);
+                          broken = true;
                         }
 
                         if(counter == 1 && globalDistance < 140){
