@@ -7,7 +7,7 @@ const synth = new Tone.MonoSynth({
 	},
 	envelope: {
         attack: 0.1,
-        //release: 0.1,
+       // release: 0.1,
         //sustain: 0.1
 	}
 }).toDestination();
@@ -37,7 +37,7 @@ var flag = 0;
 var globalSpeed;
 var globalDistance = 0;
 var freezeState;
-let noteArray = ["C4","C#4","D4","D#4","E4","E#4","F4","F#4","G4","G#4","A4","A#4","B4","B#4","C5","C#5","D5","D#5","E5","E#5","F5","F#5","G5","G#5","A5","A#5","B5","B#5"];
+let noteArray = ['B#5', 'B5', 'A#5', 'A5', 'G#5', 'G5', 'F#5', 'F5', 'E#5', 'E5', 'D#5', 'D5', 'C#5', 'C5', 'B#4', 'B4', 'A#4', 'A4', 'G#4', 'G4', 'F#4', 'F4', 'E#4', 'E4', 'D#4', 'D4', 'C#4', 'C4'];
 let breakingArray = ["A4","D#4","A5","D#5"];
 var minDistance = 60;
 var maxDistance = 480;
@@ -112,9 +112,7 @@ class Rubberband {
                           autoFilter.start();
                           indicatorSynth.start();
                           //autoFilter.frequency.value = 600;
-                          /*for(let i = 0; i < noteArray.length; i++){
-                            synth.triggerAttackRelease(noteArray[i])
-                          }*/
+                          synth.triggerAttackRelease(noteArray[i], '28n')
                           console.log("S1");
                           counter = 1;
                           console.log(counter);

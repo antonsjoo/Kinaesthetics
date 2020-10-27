@@ -1,23 +1,53 @@
 let osc, playing, freq, amp;
 
+function easeOutElastic(x){
+  const c4 = (2 * Math.PI) / 3;
+  
+  return x === 0
+    ? 0
+    : x === 1
+    ? 1
+    : Math.pow(2, -10 * x) * Math.sin((x * 10 - 0.75) * c4) + 1;
+  }
+
 function setup() {
   osc = new p5.Oscillator('sine');
 }
 
 function draw() {
-  freq = globalDistance;
-  amp = 10;
- console.log(globalDistance);
   if (playing) {
     // smooth the transitions by 0.1 seconds
     osc.freq(freq, 0.1);
     osc.amp(amp, 0.1);
   }
+  let globalDistance;
+  let maxDistance = 480;
+  let maxFreq = 1000;
+  let normalizedDistance = globalDistance/maxDistance;
+  let easedDistance = easeOutElastic(normalizedDistance);
+  amp = 10;
+  let freq = easedDistance * maxFreq;
+
+/*if(freq > 1){
+  freq = 1;
+} else if(freq < 0){
+  freq = 0;
+}*/
+
+  function playOsc(){
+    osc.start()
+  }
+  
+  playOsc();
+  
+  console.log(freq);
+
+  osc.frequency.value = freq;
 }
 
 
 
-function playOscillator() {
+/*function playOscillator() {
   // starting an oscillator on a user gesture will enable audio
   // in browsers that have a strict autoplay policy.
   // See also: userStartAudio();
@@ -46,7 +76,7 @@ function logMe(){
   console.log(globalDistance);
 }
 
-logMe();
+logMe();*/
 
 const bodies = new BodyStream ({
       posenet: posenet,
@@ -64,9 +94,8 @@ bodies.addEventListener('bodiesDetected', (e) => {
     globalDistance = distance;
     document.getElementById('output').innerText = `Distance between wrists: ${distance}`
     body.getDistanceBetweenBodyParts(bodyParts.leftWrist, bodyParts.rightWrist)
-    
-    
-    if (distance < 100) playOscillator();
+  
+    /*if (distance < 100) playOscillator();*/
     
     
 })
