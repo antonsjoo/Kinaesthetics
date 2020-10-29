@@ -108,7 +108,7 @@ class Rubberband {
                         //Creating states for the "warming up" of the note:
 
                         //indicate that the breaking limit is close:
-                        if(counter <= 1 && globalDistance >= 150){
+                        if(counter <= 1 && globalDistance >= 190){
                           autoFilter.start();
                           indicatorSynth.start();
                           //autoFilter.frequency.value = 600;
@@ -120,7 +120,7 @@ class Rubberband {
                           console.log(counter);
                         }
                         //If the breaking limit is exceeded the note will break and go back to the start:
-                        if (counter == 1 && globalDistance >= 180){
+                        if (counter == 1 && globalDistance >= 220){
                           for(let i = 0; i < breakingArray.length; i++) {
                             brokenSynth.triggerAttackRelease(breakingArray[i], '16n');   
                             for(let j = 0; j < 500; j++) {
@@ -133,14 +133,14 @@ class Rubberband {
                         }
 
                         //If you let the note rest through decreasing the distance a bit it becomes more stretchable (moves to state 2)
-                        if(counter == 1 && globalDistance < 140){
+                        if(counter == 1 && globalDistance < 170){
                           counter = 2;
                           console.log(counter);
                           autoFilter.stop();
                           indicatorSynth.stop();
                         }
 
-                        if(counter <= 3 && globalDistance >= 200){
+                        if(counter <= 3 && globalDistance >= 240){
                           autoFilter.start();
                           indicatorSynth.start();
                           //autoFilter.frequency.value = 600;
@@ -149,7 +149,7 @@ class Rubberband {
                           counter = 3;
                           console.log(counter);
                         }
-                        if(counter == 3 && globalDistance >= 230){
+                        if(counter == 3 && globalDistance >= 270){
                           for(let i = 0; i < breakingArray.length; i++) {
                             brokenSynth.triggerAttackRelease(breakingArray[i], '16n');   
                             for(let j = 0; j < 500; j++) {
@@ -161,12 +161,12 @@ class Rubberband {
                           autoFilter.stop();
                           indicatorSynth.stop();
                         }
-                        if(counter == 3 && globalDistance < 190){
+                        if(counter == 3 && globalDistance < 220){
                           counter = 4;
                           console.log(counter);
                         }
 
-                        if(counter <= 5 && globalDistance >= 250){
+                        if(counter <= 5 && globalDistance >= 290){
                           autoFilter.start();
                           indicatorSynth.start();
                           //autoFilter.frequency.value = 600;
@@ -175,7 +175,7 @@ class Rubberband {
                           counter = 5;
                           console.log(counter);
                         }
-                        if (counter == 5 && globalDistance >= 280){
+                        if (counter == 5 && globalDistance >= 320){
                           for(let i = 0; i < breakingArray.length; i++) {
                             brokenSynth.triggerAttackRelease(breakingArray[i], '16n');   
                             for(let j = 0; j < 500; j++) {
@@ -186,7 +186,7 @@ class Rubberband {
                           console.log(counter);
                         }
 
-                        if(counter == 5 && globalDistance < 240){
+                        if(counter == 5 && globalDistance < 270){
                           counter = 6;
                           console.log(counter);
                           autoFilter.stop();
