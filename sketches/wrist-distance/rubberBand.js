@@ -14,12 +14,12 @@ constructor(freezeState, minDistance,globalSpeed){
 stretch(){
   osc.frequency.value = globalDistance;
   osc.start();
- if(globalDistance >= this.freezeState){
+ /*if(globalDistance >= this.freezeState){
     flag = 1;
  }
  if(flag == 1){
     osc.frequency.value = this.freezeState
- }
+ }*/
 }
 }
 const rubberband = new Rubberband(360,100,globalSpeed)

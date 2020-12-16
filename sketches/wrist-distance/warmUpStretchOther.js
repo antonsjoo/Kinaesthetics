@@ -213,12 +213,12 @@ function newRubberband() {
 
 bodies.addEventListener('bodiesDetected', (e) => {
     body = e.detail.bodies.getBodyAt(0);
-    const rightWrist = body.getBodyPart(bodyParts.rightWrist);
-    const distance = Math.round(body.getDistanceBetweenBodyParts(bodyParts.rightAnkle, bodyParts.rightWrist));
+    const leftAnkle = body.getBodyPart(bodyParts.leftAnkle);
+    const distance = Math.round(body.getDistanceBetweenBodyParts(bodyParts.rightAnkle, bodyParts.leftAnkle));
     globalDistance = distance;
-    document.getElementById('output').innerText = `Distance between Eyes: ${distance}`;
-    body.getDistanceBetweenBodyParts(bodyParts.rightAnkle, bodyParts.rightWrist);
-    speed = rightWrist.speed.absoluteSpeed;
+    document.getElementById('output').innerText = `Distance between Ankles: ${distance}`;
+    body.getDistanceBetweenBodyParts(bodyParts.rightAnkle, bodyParts.leftAnkle);
+    speed = leftAnkle.speed.absoluteSpeed;
     globalSpeed = speed;
 
     
@@ -241,7 +241,7 @@ function drawCameraIntoCanvas() {
     if (body) {
         // draw circle for left and right Eye
         const rightAnkle = body.getBodyPart(bodyParts.rightAnkle);
-        const rightWrist = body.getBodyPart(bodyParts.rightWrist);
+        const leftAnkle = body.getBodyPart(bodyParts.leftAnkle);
 
 
 
@@ -253,14 +253,14 @@ function drawCameraIntoCanvas() {
 
         // draw right Eye
         ctx.beginPath();
-        ctx.arc(rightWrist.position.x, rightWrist.position.y, 5, 0, 2 * Math.PI);
+        ctx.arc(leftAnkle.position.x, leftAnkle.position.y, 5, 0, 2 * Math.PI);
         ctx.fillStyle = 'white';
         ctx.fill();
 
 
         ctx.beginPath();
         ctx.moveTo(rightAnkle.position.x,rightAnkle.position.y);
-        ctx.lineTo(rightWrist.position.x,rightWrist.position.y, 150);
+        ctx.lineTo(leftAnkle.position.x,leftAnkle.position.y, 150);
         ctx.lineWidth = 10;
         ctx.strokeStyle = 'white';
         ctx.stroke();

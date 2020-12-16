@@ -225,7 +225,7 @@ bodies.addEventListener('bodiesDetected', (e) => {
     const rightWrist = body.getBodyPart(bodyParts.rightWrist);
     const distance = Math.round(body.getDistanceBetweenBodyParts(bodyParts.leftWrist, bodyParts.rightWrist));
     globalDistance = distance;
-    document.getElementById('output').innerText = `Distance between Eyes: ${distance}`;
+    document.getElementById('output').innerText = `Distance between Wrists: ${distance}`;
     body.getDistanceBetweenBodyParts(bodyParts.leftWrist, bodyParts.rightWrist);
     speed = rightWrist.speed.absoluteSpeed;
     globalSpeed = speed;
